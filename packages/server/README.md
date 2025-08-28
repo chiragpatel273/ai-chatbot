@@ -1,17 +1,3 @@
 # Server
 
-Minimal Express + TypeScript backend.
-
-## Scripts
-
-- dev: Run with ts-node-dev (auto restart)
-- build: Compile to `dist/`
-- start: Run compiled output
-- typecheck: Type-only check
-
-## Quick Start
-
-```bash
-npm install
-npm run dev
-```
+\nExpress + TypeScript backend providing a Groq Llama3 chatbot API.\n\n## Features\n\n- Layered architecture (config, middleware, domain, utils)\n- Chat endpoint using Groq `llama3-70b-8192` model\n- Streaming or non-streaming responses\n- Zod validation & typed services\n- Centralized error & request logging (pino)\n- Environment variable validation\n\n## Endpoints\n\n`POST /api/chat`\nBody:\n`json\n{\n  "messages": [{"role": "user", "content": "Hello"}],\n  "stream": false\n}\n`\n\n`GET /health` basic health check.\n\n## Environment\n\nCopy `.env.example` to `.env` and set `GROQ_API_KEY`.\n\n## Scripts\n\n- `dev` run in watch mode\n- `build` compile to `dist/`\n- `start` run compiled output\n- `typecheck` type-only check\n\n## Streaming Usage\n\nSend `{ "stream": true }` to receive an SSE stream (raw token text chunks). Client should append chunks until connection closes.\n\n## TODO / Ideas\n\n- Add caching layer\n- Add rate limiting & auth\n- Add conversation memory persistence\n\n\*\*\* End Patch

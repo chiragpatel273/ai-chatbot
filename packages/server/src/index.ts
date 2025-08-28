@@ -1,15 +1,18 @@
-import express from 'express';
-import type { Request, Response } from 'express';
+import { loadEnv } from '@config/env';
+loadEnv();
+import { app } from './app';
+import { logger } from '@utils/logger';
 
-const app = express();
-app.use(express.json());
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('API is working!');
+const PORT = Number(process.env.PORT) || 3000;
+app.listen(PORT, () => {
+  logger.info({ port: PORT }, `Server listening on http://localhost:${PORT}`);
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Server running on http://localhost:${PORT}`);
+process.on('unhandledRejection', (reason) => {
+  logger.error({ reason }, 'Unhandled promise rejection');
+});
+
+process.on('uncaughtException', (err) => {
+  logger.error({ err }, 'Uncaught exception');
+  process.exit(1);
 });
