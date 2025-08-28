@@ -1,0 +1,12 @@
+# Dependencies
+node_modules
+
+# Builds
+packages/*/dist
+coverage
+
+# Lockfiles (formatting irrelevant)
+package-lock.json
+
+# Generated assets
+packages/client/node_modules/.vite
