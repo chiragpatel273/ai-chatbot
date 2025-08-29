@@ -4,6 +4,7 @@ export interface ChatMessage {
 }
 export interface ChatRequestBody {
   messages: ChatMessage[];
+  conversationId?: string;
   stream?: boolean;
   temperature?: number;
   max_tokens?: number;
