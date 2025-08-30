@@ -85,6 +85,14 @@ A modern, full-stack AI chatbot application built with React, TypeScript, Expres
 
 4. **Start the development servers**
 
+   **Option 1 - Start both simultaneously (Recommended):**
+
+   ```bash
+   npm run dev
+   ```
+
+   **Option 2 - Start separately:**
+
    **Backend (Terminal 1):**
 
    ```bash
@@ -217,8 +225,15 @@ data: {"type": "done", "conversationId": "uuid"}
 **Root level:**
 
 ```bash
-npm run format        # Format all files with Prettier
-npm run format:check  # Check formatting
+npm run dev          # Start both client and server simultaneously
+npm run dev:client   # Start only the client (frontend)
+npm run dev:server   # Start only the server (backend)
+npm run build        # Build both client and server for production
+npm run build:client # Build only the client
+npm run build:server # Build only the server
+npm run start        # Start the production server
+npm run format       # Format all files with Prettier
+npm run format:check # Check formatting
 ```
 
 **Frontend (packages/client):**
@@ -288,7 +303,6 @@ We use conventional commits:
 
 ## 🔗 Links
 
-- [Live Demo](https://your-demo-url.com) _(Update with your deployment URL)_
 - [API Documentation](http://localhost:3000/api/v1/docs) _(When running locally)_
 - [Groq Console](https://console.groq.com)
 - [React Documentation](https://react.dev)
