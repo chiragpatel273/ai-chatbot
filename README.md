@@ -278,11 +278,7 @@ We use conventional commits:
 - `test:` - Adding tests
 - `chore:` - Build/tooling changes
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [Groq](https://groq.com) for fast inference API
 - [shadcn/ui](https://ui.shadcn.com) for beautiful UI components

@@ -12,7 +12,6 @@
     "typecheck": "tsc --noEmit",
     "dev:debug": "NODE_OPTIONS=--inspect ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/index.ts"
   },
-  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
