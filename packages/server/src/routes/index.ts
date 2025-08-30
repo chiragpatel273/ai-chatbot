@@ -1,7 +1,7 @@
-import { Express, Router } from 'express';
 import { chatRouter } from '@domain/chat/chat.router';
-import { healthRouter } from './health.router';
+import { Express, Router } from 'express';
 import { docsRouter } from './docs.router';
+import { healthRouter } from './health.router';
 
 export function registerRoutes(app: Express) {
   const apiV1 = Router();

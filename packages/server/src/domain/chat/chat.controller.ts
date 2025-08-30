@@ -1,8 +1,8 @@
+import { logger } from '@utils/logger';
 import { Request, Response } from 'express';
 import { z } from 'zod';
 import { createChatCompletion, streamChatCompletion } from './chat.service';
-import { logger } from '@utils/logger';
-import { upsertConversation, appendMessage } from './memory';
+import { appendMessage, upsertConversation } from './memory';
 
 const messageSchema = z.object({
   role: z.enum(['system', 'user', 'assistant']),
@@ -43,17 +43,23 @@ export async function handleChat(req: Request, res: Response) {
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
     res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
+    res.flushHeaders();
 
     let assistantResponse = '';
 
     try {
+      logger.info({ conversationId: currentConversationId }, 'Starting streaming response');
+
       for await (const chunk of streamChatCompletion({
         messages: contextMessages,
         temperature,
         max_tokens,
       })) {
         assistantResponse += chunk;
-        res.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
+        const data = JSON.stringify({ content: chunk });
+        logger.debug({ chunk: data }, 'Sending stream chunk');
+        res.write(`data: ${data}\n\n`);
       }
 
       // Store assistant response in conversation
@@ -61,9 +67,12 @@ export async function handleChat(req: Request, res: Response) {
         appendMessage(currentConversationId, { role: 'assistant', content: assistantResponse });
       }
 
-      res.write(
-        `data: ${JSON.stringify({ type: 'done', conversationId: currentConversationId })}\n\n`,
+      const doneData = JSON.stringify({ type: 'done', conversationId: currentConversationId });
+      logger.info(
+        { conversationId: currentConversationId },
+        'Stream completed, sending done signal',
       );
+      res.write(`data: ${doneData}\n\n`);
       res.end();
     } catch (err: any) {
       logger.error({ err, conversationId: currentConversationId }, 'Streaming chat error');

@@ -1,11 +1,12 @@
-import { Button } from '@/components/ui/button';
+import { ChatInterface } from '@/components/chat/ChatInterface';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import './App.css';
 
 function App() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>Click me</Button>
-    </div>
+    <ErrorBoundary>
+      <ChatInterface />
+    </ErrorBoundary>
   );
 }
 
